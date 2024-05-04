@@ -1,0 +1,43 @@
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .add-note {
+    margin-bottom: 40px;
+  }
+  
+  .notes {
+    width: 100%;
+  }
+  
+  .note-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .note-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    margin-bottom: 0;
+  }
+  
+  .empty-message {
+    font-style: italic;
+    color: #666;
+  }

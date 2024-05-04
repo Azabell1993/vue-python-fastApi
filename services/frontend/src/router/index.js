@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
+import CustomAlert from '@/views/CustomAlert.vue';
+import HelloView from '@/views/HelloView.vue';
 import DashboardView from '@/views/DashboardView.vue';
-import ProfileView from '@/views/ProfileView.vue';
 import NoteView from '@/views/NoteView.vue';
 import EditNoteView from '@/views/EditNoteView.vue';
 import store from '@/store'; // NEW
@@ -16,6 +17,11 @@ const routes = [
     component: HomeView,
   },
   {
+    path: '/portfolio',
+    name: 'portfolio',
+    component: HelloView,
+  },
+  {
     path: '/register',
     name: 'Register',
     component: RegisterView,
@@ -26,15 +32,14 @@ const routes = [
     component: LoginView,
   },
   {
+    path: '/CustomAlert',
+    name: 'CustomAlert',
+    component: CustomAlert,
+  },
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: DashboardView,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: ProfileView,
     meta: { requiresAuth: true },
   },
   {

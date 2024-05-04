@@ -11,12 +11,15 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div v-if="!isLoggedIn" class="alert alert-warning mt-3" role="alert">
+      You are not logged in. Please <router-link to="/register">sign up</router-link> to continue.
+    </div>
   </section>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default defineComponent({
   name: 'UserLogin',
@@ -28,6 +31,9 @@ export default defineComponent({
       }
     };
   },
+  computed: {
+    ...mapGetters(['isLoggedIn']),
+  },
   methods: {
     ...mapActions(['logIn']),
     async submit() {
@@ -35,7 +41,7 @@ export default defineComponent({
       User.append('username', this.form.username);
       User.append('password', this.form.password);
       await this.logIn(User);
-      this.$router.push('/dashboard');
+      this.$router.push('/portfolio');
     }
   }
 });
