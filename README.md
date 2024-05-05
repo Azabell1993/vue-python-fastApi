@@ -7,11 +7,12 @@
 # Vue.js + Python FastAPI + WASM + Docker
 
 1. docker-compose 버전 수정 및 Dockerfile과 호환을 위한 포트번호 추가
-2. 회원가입, 로그인에서 상당 부분을 수정함
-    추가한 코드 : 
-    /home/jiwoo/Desktop/main-vue/services/frontend/src/views/CustomAlert.vue    -- Alert창을 Custom한 Vue 코드
-    /home/jiwoo/Desktop/main-vue/services/frontend/src/views/WasmView.vue       -- WASM을 테스트하기 위한 WasmView Vue 코드
-    /home/jiwoo/Desktop/main-vue/services/frontend/src/assets/css/main.css      -- main.css
+2. 회원가입, 로그인에서 상당 부분을 수정함  
+    추가한 코드 :   
+    - /home/jiwoo/Desktop/main-vue/services/frontend/src/views/CustomAlert.vue    -- Alert창을 Custom한 Vue 코드 추가  
+    - /home/jiwoo/Desktop/main-vue/services/frontend/src/views/WasmView.vue       -- WASM을 테스트하기 위한 WasmView Vue 코드 추가  
+    - /home/jiwoo/Desktop/main-vue/services/frontend/src/assets/css/main.css      -- main.css 등  
+    - 등등 수정 함
 
 3. docker-compose 에서 command: ./create_secret_key.sh 부분을 참조하면
 ```
