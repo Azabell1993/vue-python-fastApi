@@ -160,7 +160,7 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
 
 만약, front-app(Vue.js)만 재시작하고 싶다면.  
 
-    ```
+
     /Desktop/main-vue/backup$ sudo docker ps
     CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                       NAMES
     5f691a1ee93a   main-vue_backend    "./create_secret_key…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   main-vue_backend_1
@@ -169,6 +169,6 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
 
     # Container ID를 확인한 후
     sudo docker restart 8addfea4c981
-    ```  
+
 를 수행하세요.
 
