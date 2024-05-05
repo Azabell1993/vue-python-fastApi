@@ -9,27 +9,27 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul v-if="isLoggedIn" class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
+              <router-link class="nav-link" to="/">홈으로</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/portfolio">PortFolio</router-link>
+              <router-link class="nav-link" to="/portfolio">포트폴리오</router-link>
             </li>
             <!-- <li class="nav-item">
               <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link" @click="logout">Log Out</a>
+              <a class="nav-link" @click="logout">로그아웃</a>
             </li>
           </ul>
           <ul v-else class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
+              <router-link class="nav-link" to="/">홈으로</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/register">Register</router-link>
+              <router-link class="nav-link" to="/register">회원가입</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/login">Log In</router-link>
+              <router-link class="nav-link" to="/login">로그인</router-link>
             </li>
           </ul>
         </div>

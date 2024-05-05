@@ -10,16 +10,15 @@
         <input type="password" name="password" v-model="form.password" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <div v-if="message" class="alert alert-success mt-3">{{ message }}</div>
+      <div v-if="error" class="alert alert-danger mt-3">{{ error }}</div>
     </form>
-    <div v-if="!isLoggedIn" class="alert alert-warning mt-3" role="alert">
-      You are not logged in. Please <router-link to="/register">sign up</router-link> to continue.
-    </div>
   </section>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default defineComponent({
   name: 'UserLogin',
@@ -27,21 +26,35 @@ export default defineComponent({
     return {
       form: {
         username: '',
-        password:'',
-      }
+        password: ''
+      },
+      message: '',
+      error: ''
     };
   },
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapState(['loginInfo'])
   },
   methods: {
     ...mapActions(['logIn']),
     async submit() {
-      const User = new FormData();
-      User.append('username', this.form.username);
-      User.append('password', this.form.password);
-      await this.logIn(User);
-      this.$router.push('/portfolio');
+      try {
+        const User = new FormData();
+        User.append('username', this.form.username);
+        User.append('password', this.form.password);
+        await this.logIn(User);
+        this.$router.push('/portfolio');
+      } catch (error) {
+        this.error = error.message;
+      }
+    },
+  },
+  mounted() {
+    // Vuex로부터 로그인 정보를 가져와 폼을 채우기
+    if (this.loginInfo) {
+      this.form.username = this.loginInfo.username;
+      this.form.password = this.loginInfo.password;
+      this.submit(); // 자동 로그인 시도
     }
   }
 });

@@ -9,5 +9,6 @@ RUN npm install @vue/cli@5.0.8 -g
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
+RUN npm install vuex-persistedstate
 
 CMD ["npm", "run", "serve"]

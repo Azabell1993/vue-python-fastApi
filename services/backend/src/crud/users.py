@@ -20,7 +20,6 @@ async def create_user(user) -> UserOutSchema:
 
     return await UserOutSchema.from_tortoise_orm(user_obj)
 
-
 async def delete_user(user_id, current_user) -> Status:
     try:
         db_user = await UserOutSchema.from_queryset_single(Users.get(id=user_id))

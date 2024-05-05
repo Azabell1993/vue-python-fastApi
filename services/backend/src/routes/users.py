@@ -18,15 +18,28 @@ from src.auth.jwthandler import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 
-
 router = APIRouter()
 
-
-@router.post("/register", response_model=UserOutSchema)
+@router.post("/register", response_model=UserOutSchema, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserInSchema) -> UserOutSchema:
-    return await crud.create_user(user)
-
-
+    try:
+        return await crud.create_user(user)
+    except IntegrityError as e:
+        if 'duplicate key value violates unique constraint' in str(e):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="이미 사용중인 아이디입니다. 다른 아이디를 선택해 주세요."
+            )
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="회원가입 처리 중 오류가 발생했습니다."
+        )
+        
 @router.post("/login")
 async def login(user: OAuth2PasswordRequestForm = Depends()):
     user = await validate_user(user)
@@ -54,16 +67,11 @@ async def login(user: OAuth2PasswordRequestForm = Depends()):
         samesite="Lax",
         secure=False,
     )
-
     return response
 
-
-@router.get(
-    "/users/whoami", response_model=UserOutSchema, dependencies=[Depends(get_current_user)]
-)
+@router.get("/users/whoami", response_model=UserOutSchema, dependencies=[Depends(get_current_user)])
 async def read_users_me(current_user: UserOutSchema = Depends(get_current_user)):
     return current_user
-
 
 @router.delete(
     "/user/{user_id}",

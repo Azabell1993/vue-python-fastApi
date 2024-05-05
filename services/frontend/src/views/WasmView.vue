@@ -5,6 +5,8 @@
         <h2>Vue.js + Python FastAPI + WASM 연동 Test</h2><br>
       </header>
       <ul class="actions">
+        <p v-if="user">  현재 로그인한 사용자 (username) : [ <strong> {{ user.username }}</strong> ]님</p>
+        <p v-else>로그인이 필요합니다.</p>
         <h5>C언어 Function Test</h5>
         <br/>
           <input type="number" v-model="numA" size="20"> + <input type="number" v-model="numB" size="20">
@@ -168,7 +170,7 @@
 
   // defineComponent 함수를 사용하여 Vue 컴포넌트를 정의한다.
   export default defineComponent({
-    name: 'HelloView', // 컴포넌트의 이름을 'HelloView'로 설정한다.
+    name: 'WasmView', // 컴포넌트의 이름을 'WasmView'로 설정한다.
     components: {
       CustomAlert // 'CustomAlert' 컴포넌트를 로컬 컴포넌트로 등록한다.
     },
@@ -240,14 +242,16 @@
 
 <script>
 // 필요한 Vue 함수와 컴포넌트를 불러온다.
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, computed } from 'vue';
 import CustomAlert from './CustomAlert.vue'; // CustomAlert.vue 컴포넌트를 가져온다.
+import '@/assets/css/main.css';
+import { useStore } from 'vuex';
 
 // defineComponent 함수를 사용하여 Vue 컴포넌트를 정의한다.
 export default defineComponent({
-  name: 'HelloView', // 컴포넌트의 이름을 'HelloView'로 설정한다.
+  name: 'WasmView', // 컴포넌트의 이름을 'WasmView'로 설정한다.
   components: {
-    CustomAlert // 'CustomAlert' 컴포넌트를 로컬 컴포넌트로 등록한다.
+    CustomAlert, // 'CustomAlert' 컴포넌트를 로컬 컴포넌트로 등록한다.
   },
   setup() {
     // ref 함수를 사용하여 반응형 참조 데이터를 생성한다.
@@ -258,6 +262,9 @@ export default defineComponent({
     const isAlertVisible = ref(false); // 경고창의 표시 여부를 제어하는 반응형 참조입니다.
     const isModuleLoaded = ref(false); // WebAssembly 모듈의 로드 완료 여부를 확인하는 반응형 참조입니다.
     let wasmModule = null; // 로드된 WebAssembly 모듈의 인스턴스를 저장할 변수입니다.
+    
+    const store = useStore();  // Vuex store를 사용합니다.
+    const user = computed(() => store.getters.stateUser);
 
     // 컴포넌트가 마운트된 후 실행할 작업을 정의한다.
     onMounted(async () => {
@@ -291,7 +298,7 @@ export default defineComponent({
     // setup 함수에서 생성한 모든 반응형 참조와 함수를 반환한다.
     // 이 반환값은 템플릿에서 바로 사용할 수 있습니다.
     return {
-      numA, numB, resultMessage, performAddition, isModuleLoaded, alertMessage, isAlertVisible
+      numA, numB, resultMessage, performAddition, isModuleLoaded, alertMessage, isAlertVisible, user
     };
   }
 });
