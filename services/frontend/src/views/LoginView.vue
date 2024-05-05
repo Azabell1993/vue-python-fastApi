@@ -25,8 +25,8 @@ export default defineComponent({
   data() {
     return {
       form: {
-        username: '',
-        password: ''
+        username: 'test',
+        password: '1234'
       },
       message: '',
       error: ''
