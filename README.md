@@ -11,6 +11,7 @@
     추가한 코드 : 
     /home/jiwoo/Desktop/main-vue/services/frontend/src/views/CustomAlert.vue    -- Alert창을 Custom한 Vue 코드
     /home/jiwoo/Desktop/main-vue/services/frontend/src/views/WasmView.vue       -- WASM을 테스트하기 위한 WasmView Vue 코드
+    /home/jiwoo/Desktop/main-vue/services/frontend/src/assets/css/main.css      -- main.css
 
 3. docker-compose 에서 command: ./create_secret_key.sh 부분을 참조하면
 ```
@@ -86,7 +87,7 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     ```  
 
     9) crontab에 1분단위 테스트 진행
-    # 1분단위 테스트(test 용)
+    - 1분단위 테스트(test 용)
     * * * * * /백업스크립트경로/backup_.sh >> /log 모니터링 할 경로/crontab_.log 2>&1
 
     $ sudo tail -f crontab_.log
@@ -109,13 +110,13 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
 
 
     10) 자동화 작성
-    # 매일 오후 4시에 백업이 진행되는 코드
+    - 매일 오후 4시에 백업이 진행되는 코드
     #0 16 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
 
-    # 매일 새벽 12시에 백업이 진행되는 코드
+    - 매일 새벽 12시에 백업이 진행되는 코드
     0 0 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
 
-    # 1분단위 테스트(test 용)
+    - 1분단위 테스트(test 용)
     #* * * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
 
     11) 복원시
@@ -124,50 +125,49 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     CREATE USER hello_fastapi WITH ENCRYPTED PASSWORD 'your_password';
     GRANT ALL PRIVILEGES ON DATABASE hello_fastapi_dev TO hello_fastapi;
 
-    # 복원하기
+    - 복원하기
     psql -U hello_fastapi -h localhost -p 5433 -d hello_fastapi_dev -f /path/to/your/backup/public_backup_20240505103010.sql
 
 
 4. python으로 작성한 회원가입 API 로직이 작동하는지 확인해보려면  
-```
- curl -X POST http://localhost:5000/login -H "Content-Type: application/json" -d '{"username":"test", "password":"1234", "full_name":"test"}'```
-```  
+    ```
+    curl -X POST http://localhost:5000/login -H "Content-Type: application/json" -d '{"username":"test", "password":"1234", "full_name":"test"}'```
+    ```  
 
-```
-curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username":"testuser", "password":"password123", "full_name":"Test User"}'
-```  
+    ```
+    curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username":"testuser", "password":"password123", "full_name":"Test User"}'
+    ```  
 
 - 터미널 결과 값 : 
-``` {"id":100,"username":"testuser","full_name":"Test User","note":[]} ```  
+    ``` {"id":100,"username":"testuser","full_name":"Test User","note":[]} ```  
 - 실제 DB조회 시 : 
-```
-hello_fastapi_dev=# select * from users;
- id  | username | full_name |                           password                           |          created_at           |          modified_at          
------+----------+-----------+--------------------------------------------------------------+-------------------------------+-------------------------------
-   2 | test     | test      | $2b$12$vyn5IReAYuMTbjeD5Mj7A.VtVGzAiKBUiQJqVUQp82zpAPcLO14iq | 2024-05-04 12:07:44.112106+00 | 2024-05-04 12:07:44.112131+00
- 100 | testuser | Test User | $2b$12$v8L2rpFaQvhQNgyVUiVLsucjvCIp39DdDwOdNh3RBUIe/E67s4SwC | 2024-05-05 07:26:15.690754+00 | 2024-05-05 07:26:15.690776+00
-```  
+    ```
+    hello_fastapi_dev=# select * from users;
+    id  | username | full_name |                           password                           |          created_at           |          modified_at          
+    -----+----------+-----------+--------------------------------------------------------------+-------------------------------+-------------------------------
+      2 | test     | test      | $2b$12$vyn5IReAYuMTbjeD5Mj7A.VtVGzAiKBUiQJqVUQp82zpAPcLO14iq | 2024-05-04 12:07:44.112106+00 | 2024-05-04 12:07:44.112131+00
+    100 | testuser | Test User | $2b$12$v8L2rpFaQvhQNgyVUiVLsucjvCIp39DdDwOdNh3RBUIe/E67s4SwC | 2024-05-05 07:26:15.690754+00 | 2024-05-05 07:26:15.690776+00
+    ```  
 
 5. docker-compose 를 편하게 돌리려면 docker_start.sh를 사용하세요.  
-```
-sudo docker-compose down
-sudo docker system prune -a
-sudo systemctl restart docker
-sudo docker-compose down
-sudo docker-compose up -d
-```  
+    ```
+    sudo docker-compose down
+    sudo docker system prune -a
+    sudo systemctl restart docker
+    sudo docker-compose down
+    sudo docker-compose up -d
+    ```  
 
 만약, front-app(Vue.js)만 재시작하고 싶다면.
-```
-/Desktop/main-vue/backup$ sudo docker ps
-CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                       NAMES
-5f691a1ee93a   main-vue_backend    "./create_secret_key…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   main-vue_backend_1
-8addfea4c981   main-vue_frontend   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   main-vue_frontend_1
-b856fa6d9580   postgres:15.1       "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp   main-vue_db_1
-```  
-```
-sudo docker restart 8addfea4c981
-```  
+    ```
+    /Desktop/main-vue/backup$ sudo docker ps
+    CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                       NAMES
+    5f691a1ee93a   main-vue_backend    "./create_secret_key…"   2 hours ago   Up 2 hours   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   main-vue_backend_1
+    8addfea4c981   main-vue_frontend   "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   main-vue_frontend_1
+    b856fa6d9580   postgres:15.1       "docker-entrypoint.s…"   2 hours ago   Up 2 hours   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp   main-vue_db_1
+    ```  
+    ```
+    sudo docker restart 8addfea4c981
+    ```  
 를 수행하세요.
 
-6. 
