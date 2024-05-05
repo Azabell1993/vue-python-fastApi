@@ -90,23 +90,23 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     - 1분단위 테스트(test 용)
     * * * * * /백업스크립트경로/backup_.sh >> /log 모니터링 할 경로/crontab_.log 2>&1
 
-    $ sudo tail -f crontab_.log
-    Backup successful for schema public on 20240505170501.
-    Backup completed at Sun May  5 17:05:02 KST 2024
-    Backup successful for schema public on 20240505170601.
-    Backup completed at Sun May  5 17:06:01 KST 2024
-    Backup successful for schema public on 20240505170701.
-    Backup completed at Sun May  5 17:07:01 KST 2024
-    Backup successful for schema public on 20240505170801.
-    Backup completed at Sun May  5 17:08:01 KST 2024
-    Backup successful for schema public on 20240505170901.
-    Backup completed at Sun May  5 17:09:01 KST 2024
-    Backup successful for schema public on 20240505171001.
-    Backup completed at Sun May  5 17:10:01 KST 2024
-    Backup successful for schema public on 20240505171101.
-    Backup completed at Sun May  5 17:11:02 KST 2024
-    Backup successful for schema public on 20240505171201.
-    Backup completed at Sun May  5 17:12:01 KST 2024
+    -- $ sudo tail -f crontab_.log  
+          Backup successful for schema public on 20240505170501.
+          Backup completed at Sun May  5 17:05:02 KST 2024
+          Backup successful for schema public on 20240505170601.
+          Backup completed at Sun May  5 17:06:01 KST 2024
+          Backup successful for schema public on 20240505170701.
+          Backup completed at Sun May  5 17:07:01 KST 2024
+          Backup successful for schema public on 20240505170801.
+          Backup completed at Sun May  5 17:08:01 KST 2024
+          Backup successful for schema public on 20240505170901.
+          Backup completed at Sun May  5 17:09:01 KST 2024
+          Backup successful for schema public on 20240505171001.
+          Backup completed at Sun May  5 17:10:01 KST 2024
+          Backup successful for schema public on 20240505171101.
+          Backup completed at Sun May  5 17:11:02 KST 2024
+          Backup successful for schema public on 20240505171201.
+          Backup completed at Sun May  5 17:12:01 KST 2024
 
 
     10) 자동화 작성
@@ -159,6 +159,7 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     ```  
 
 만약, front-app(Vue.js)만 재시작하고 싶다면.  
+
     ```
     /Desktop/main-vue/backup$ sudo docker ps
     CONTAINER ID   IMAGE               COMMAND                  CREATED       STATUS       PORTS                                       NAMES
