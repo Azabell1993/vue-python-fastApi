@@ -1,29 +1,29 @@
 import axios from 'axios';
 
 const state = {
-  user: null,
+  user: JSON.parse(localStorage.getItem('user')) || null, // 초기 상태 설정
 };
 
 const getters = {
-  isAuthenticated: state => !!state.user,
+  isAuthenticated: state => !!state.user, // 이제 이 부분은 Vuex 상태를 기반으로 합니다.
   stateUser: state => state.user,
 };
 
 const actions = {
-
   async logIn({ commit }, user) {
     try {
       const response = await axios.post('login', user);
-      // 로그인 성공 후 사용자 정보 검증
-      let {data} = await axios.get('users/whoami');
-      await commit('setUser', data);
+      console.log(response)
+      console.log(response.data)
+      let { data } = await axios.get('users/whoami');
+      await commit('setUser', data); // 사용자 객체 전체를 저장
+      localStorage.setItem('user', JSON.stringify(data)); // 로컬 스토리지에 사용자 정보 저장
       if (response.data && data) {
         return true;
       } else {
         throw new Error('로그인 정보를 확인할 수 없습니다.');
       }
     } catch (error) {
-      console.error('로그인 에러:', error.response ? error.response.data.detail : error.message);
       throw new Error(error.response ? error.response.data.detail : '로그인 요청이 잘못되었습니다.');
     }
   },
@@ -57,23 +57,23 @@ const actions = {
     let {data} = await axios.get('users/whoami');
     await commit('setUser', data);
   },
-  
-  // eslint-disable-next-line no-empty-pattern
-  async deleteUser({}, id) {
+
+  async deleteUser(id) {
     await axios.delete(`user/${id}`);
   },
+
   async logOut({commit}) {
-    let user = null;
-    commit('logout', user);
+    await commit('logout', null);
+    localStorage.removeItem('user'); // 로컬 스토리지에서 사용자 정보 삭제
   }
 };
 
 const mutations = {
-  setUser(state, username) {
-    state.user = username;
-  },
-  logout(state, user){
+  setUser(state, user) {
     state.user = user;
+  },
+  logout(state) {
+    state.user = null;
   }
 };
 

@@ -111,23 +111,23 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
 
 
     10) 자동화 작성
-    - 매일 오후 4시에 백업이 진행되는 코드
-    #0 16 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
+    - 매일 오후 4시에 백업이 진행되는 코드  
+    #0 16 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1  
+  
+    - 매일 새벽 12시에 백업이 진행되는 코드  
+    0 0 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1  
+  
+    - 1분단위 테스트(test 용)  
+    #* * * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1  
+  
+    11) 복원시  
+    $ psql -U postgres 먼저 계정 생성  
+    | CREATE DATABASE hello_fastapi_dev;  
+    | CREATE USER hello_fastapi WITH ENCRYPTED PASSWORD 'your_password';  
+    | GRANT ALL PRIVILEGES ON DATABASE hello_fastapi_dev TO hello_fastapi;  
 
-    - 매일 새벽 12시에 백업이 진행되는 코드
-    0 0 * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
-
-    - 1분단위 테스트(test 용)
-    #* * * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1
-
-    11) 복원시
-    $ psql -U postgres 먼저 계정 생성
-    CREATE DATABASE hello_fastapi_dev;
-    CREATE USER hello_fastapi WITH ENCRYPTED PASSWORD 'your_password';
-    GRANT ALL PRIVILEGES ON DATABASE hello_fastapi_dev TO hello_fastapi;
-
-    - 복원하기
-    psql -U hello_fastapi -h localhost -p 5433 -d hello_fastapi_dev -f /path/to/your/backup/public_backup_20240505103010.sql
+    - 복원하기  
+    | psql -U hello_fastapi -h localhost -p 5433 -d hello_fastapi_dev -f /path/to/your/backup/public_backup_20240505103010.sql
 
 
 4. python으로 작성한 회원가입 API 로직이 작동하는지 확인해보려면  
