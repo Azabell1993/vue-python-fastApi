@@ -91,8 +91,8 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     - 1분단위 테스트(test 용)
     * * * * * /백업스크립트경로/backup_.sh >> /log 모니터링 할 경로/crontab_.log 2>&1
 
-    -- $ sudo tail -f crontab_.log  
-          Backup successful for schema public on 20240505170501.
+    ``` $ sudo tail -f crontab_.log  ```  
+          | Backup successful for schema public on 20240505170501.
           Backup completed at Sun May  5 17:05:02 KST 2024
           Backup successful for schema public on 20240505170601.
           Backup completed at Sun May  5 17:06:01 KST 2024
@@ -121,7 +121,7 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     #* * * * * /data/sstd_backup/sstd_backup.sh >> /data/sstd_backup/sstd_crontab_cron.log 2>&1  
   
     11) 복원시  
-    $ psql -U postgres 먼저 계정 생성  
+    ``` $ psql -U postgres 먼저 계정 생성  ```  
     | CREATE DATABASE hello_fastapi_dev;  
     | CREATE USER hello_fastapi WITH ENCRYPTED PASSWORD 'your_password';  
     | GRANT ALL PRIVILEGES ON DATABASE hello_fastapi_dev TO hello_fastapi;  
@@ -139,7 +139,7 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
     B : curl -X POST http://127.0.0.1:5000/register -H "Content-Type: application/json" -d '{"username":"testuser", "password":"password123", "full_name":"Test User"}'
     ```  
 
-- 터미널 결과 값 :
+- 터미널 결과 값 :  
     A : ``` {"message":"You've successfully logged in. Welcome back!"} ```  
     B : ``` {"id":100,"username":"testuser","full_name":"Test User","note":[]} ```  
       
