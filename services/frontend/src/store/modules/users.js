@@ -13,12 +13,10 @@ const actions = {
   async logIn({ commit }, user) {
     try {
       const response = await axios.post('login', user);
-      console.log(response)
-      console.log(response.data)
-      let { data } = await axios.get('users/whoami');
-      await commit('setUser', data); // 사용자 객체 전체를 저장
-      localStorage.setItem('user', JSON.stringify(data)); // 로컬 스토리지에 사용자 정보 저장
-      if (response.data && data) {
+      if (response.data) {
+        let { data } = await axios.get('users/whoami');
+        await commit('setUser', data); // 사용자 객체 전체를 저장
+        localStorage.setItem('user', JSON.stringify(data)); // 로컬 스토리지에 사용자 정보 저장
         return true;
       } else {
         throw new Error('로그인 정보를 확인할 수 없습니다.');
@@ -52,9 +50,9 @@ const actions = {
       throw new Error(errorMessage);
     }
   },
-  
-  async viewMe({commit}) {
-    let {data} = await axios.get('users/whoami');
+
+  async viewMe({ commit }) {
+    let { data } = await axios.get('users/whoami');
     await commit('setUser', data);
   },
 
@@ -62,9 +60,9 @@ const actions = {
     await axios.delete(`user/${id}`);
   },
 
-  async logOut({commit}) {
-    await commit('logout', null);
-    localStorage.removeItem('user'); // 로컬 스토리지에서 사용자 정보 삭제
+  async logOut({ commit }) {
+    await commit('logout');
+    localStorage.removeItem('user');
   }
 };
 

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
@@ -7,7 +7,6 @@ import DashboardView from '@/views/DashboardView.vue';
 import NoteView from '@/views/NoteView.vue';
 import EditNoteView from '@/views/EditNoteView.vue';
 import store from '@/store'; // NEW
-
 
 const routes = [
   {
@@ -50,7 +49,7 @@ const routes = [
   {
     path: '/portfolio',
     name: 'Portfolio',
-    component :  WasmView,
+    component: WasmView,
     beforeEnter: (to, from, next) => {
       if (store.getters.isAuthenticated) {
         next();

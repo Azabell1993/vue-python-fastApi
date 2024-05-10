@@ -9,7 +9,7 @@ import store from './store';
 const app = createApp(App);
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://34.22.104.185:5000/';
+axios.defaults.baseURL = 'http://172.21.69.109:5000/';
 
 axios.interceptors.response.use(undefined, function (error) {
   if (error) {

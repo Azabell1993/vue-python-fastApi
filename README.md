@@ -132,24 +132,27 @@ exec uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
 
 4. python으로 작성한 회원가입 API 로직이 작동하는지 확인해보려면  
     ```
-    curl -X POST http://localhost:5000/login -H "Content-Type: application/json" -d '{"username":"test", "password":"1234", "full_name":"test"}'```
+    A : curl -X POST http://127.0.0.1:5000/login -d "username=test&password=1234"
     ```  
 
     ```
-    curl -X POST http://localhost:5000/register -H "Content-Type: application/json" -d '{"username":"testuser", "password":"password123", "full_name":"Test User"}'
+    B : curl -X POST http://127.0.0.1:5000/register -H "Content-Type: application/json" -d '{"username":"testuser", "password":"password123", "full_name":"Test User"}'
     ```  
 
-- 터미널 결과 값 : 
-    ``` {"id":100,"username":"testuser","full_name":"Test User","note":[]} ```  
-- 실제 DB조회 시 : 
+- 터미널 결과 값 :
+    A : ``` {"message":"You've successfully logged in. Welcome back!"} ```  
+    B : ``` {"id":100,"username":"testuser","full_name":"Test User","note":[]} ```  
+      
+- 실제 DB조회 시 :   
     ```
-    hello_fastapi_dev=# select * from users;
-    id  | username | full_name |                           password                           |          created_at           |          modified_at          
-    -----+----------+-----------+--------------------------------------------------------------+-------------------------------+-------------------------------
-      2 | test     | test      | $2b$12$vyn5IReAYuMTbjeD5Mj7A.VtVGzAiKBUiQJqVUQp82zpAPcLO14iq | 2024-05-04 12:07:44.112106+00 | 2024-05-04 12:07:44.112131+00
-    100 | testuser | Test User | $2b$12$v8L2rpFaQvhQNgyVUiVLsucjvCIp39DdDwOdNh3RBUIe/E67s4SwC | 2024-05-05 07:26:15.690754+00 | 2024-05-05 07:26:15.690776+00
+    $ docker exec -it vue-python-fastapi-db-1 psql -U hello_fastapi -d hello_fastapi_dev  
+    hello_fastapi_dev=# select * from users;  
+    id  | username | full_name |                           password                           |          created_at           |          modified_at            
+    -----+----------+-----------+--------------------------------------------------------------+-------------------------------+-------------------------------  
+      2 | test     | test      | $2b$12$vyn5IReAYuMTbjeD5Mj7A.VtVGzAiKBUiQJqVUQp82zpAPcLO14iq | 2024-05-04 12:07:44.112106+00 | 2024-05-04 12:07:44.112131+00  
+    100 | testuser | Test User | $2b$12$v8L2rpFaQvhQNgyVUiVLsucjvCIp39DdDwOdNh3RBUIe/E67s4SwC | 2024-05-05 07:26:15.690754+00 | 2024-05-05 07:26:15.690776+00  
     ```  
-
+  
 5. docker-compose 를 편하게 돌리려면 docker_start.sh를 사용하세요.  
     ```
     sudo docker-compose down
